@@ -1,9 +1,20 @@
-# metweather Project
+# MetWeather
 
-## Overview
-The metweather project is a Django-based web application that provides weather data through a RESTful API. It allows users to retrieve weather information by sending requests to specific endpoints.
+MetWeather is a Django-based web application for uploading, processing, and visualizing weather data. Users can submit a dataset URL, and the app will extract, store, and display weather summaries in a user-friendly interface.
+
+## Features
+
+- Upload weather datasets via URL
+- Extract and store weather data in a database
+- REST API endpoints for weather data
+- Responsive web UI for searching and viewing weather summaries
 
 ## Project Structure
+
+- `metweather/` – Django project settings and configuration
+- `weather/` – Main app with models, views, serializers, templates, and utilities
+- `db.sqlite3` – SQLite database file
+
 ```
 metweather/
 ├── weather/
@@ -49,6 +60,10 @@ To run the application locally, use the following command:
 python manage.py runserver
 ```
 
+## Access the app
+
+   Open [http://localhost:8000/](http://localhost:8000/) in your browser.
+
 ## Docker Setup
 To build and run the application using Docker, use the following commands:
 ```
@@ -56,14 +71,26 @@ docker-compose up --build
 ```
 
 ## API Endpoints
-- **Weather Summary**: `POST /weather-summary/`
-  - Expects a JSON body with a `dataset_url` field.
-  
-- **Weather List**: `GET /weather-list/`
-  - Returns a list of all weather data entries.
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+- `POST /api/summary/`  
+  Extracts weather data from a provided dataset URL.  
+  **Body:** `{ "dataset_url": "<url>" }`
+
+- `GET /api/weather/`  
+  Returns all stored weather data.
+
+## File Overview
+
+- [weather/views.py](weather/views.py): Main API and view logic ([`WeatherSummaryAPIView`](weather/views.py), [`WeatherListAPIView`](weather/views.py))
+- [weather/models.py](weather/models.py): Weather data model ([`WeatherData`](weather/models.py))
+- [weather/serializers.py](weather/serializers.py): Serializers for API responses ([`WeatherDataSerializer`](weather/serializers.py))
+- [weather/utils.py](weather/utils.py): Data extraction logic ([`extract_data`](weather/utils.py))
+- [weather/templates/index.html](weather/templates/index.html): Main web UI
+
+## Customization
+
+- Update `weather/utils.py` to support new dataset formats.
+- Modify `weather/templates/index.html` for UI changes.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more details.
